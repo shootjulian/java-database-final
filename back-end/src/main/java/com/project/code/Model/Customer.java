@@ -1,7 +1,82 @@
 package com.project.code.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
+
+@Entity
+@Table(name = "customers")
 public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = "Name cannot be null")
+    private String name;
+
+    @NotNull(message = "Email cannot be null")
+    private String email;
+
+    @NotNull(message = "Phone cannot be null")
+    private String phone;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER) //Loads all orders of a customer when using DB
+    @JsonManagedReference
+    List<OrderDetails> orders = new ArrayList<>();
+    
+
+    // Getters and setters
+    public Long getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+    
+    public String getPhone(){
+        return phone;
+    }
+
+    public List<OrderDetails> getOrders(){
+        return orders;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setOrders(List<OrderDetails> orders){
+        this.orders = orders;
+    }
 
 // 1. Add 'id' field: 
 //    - Type: private long 
@@ -44,6 +119,7 @@ public class Customer {
 // 7. Ensure to use proper annotations and validate constraints:
 //    - Use @NotNull for fields that cannot be empty like 'name', 'email', and 'phone'.
 //    - Make sure you add the correct annotations for entity mapping and relationship management like @Entity, @Id, @GeneratedValue, @OneToMany, and @JsonManagedReference.
+
 
 }
 
