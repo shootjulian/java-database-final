@@ -25,6 +25,7 @@ public class Store {
     private long id;
 
     @NotNull
+    @NotBlank
     private String name;
 
     @NotNull
@@ -35,6 +36,16 @@ public class Store {
     @JsonManagedReference("inventory-store")
     private List<Inventory> inventories = new ArrayList<>();
 
+    //Constructors
+    // Required by JPA/Hibernate
+    public Store() {
+    }
+
+    // Used when creating a new store
+    public Store(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 
     //Getters and setters
     public long getId() {

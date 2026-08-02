@@ -1,6 +1,98 @@
 package com.project.code.Model;
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "order_items")
 public class OrderItem {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    @JsonManagedReference
+    private OrderDetails order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonManagedReference
+    private Product product;
+
+    @NotNull
+    private Integer quantity;
+
+    @NotNull
+    private Double price;
+
+
+    //Constructor methods
+    public OrderItem() {}
+
+    public OrderItem(
+            OrderDetails order,
+            Product product,
+            Integer quantity,
+            Double price
+    ) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+
+    //Getters and setters
+    public long getId() {
+        return id;
+    }
+
+    public OrderDetails getOrder() {
+        return order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setOrder(OrderDetails order) {
+        this.order = order;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
 // 1. Add 'id' field:
 //    - Type: private Long

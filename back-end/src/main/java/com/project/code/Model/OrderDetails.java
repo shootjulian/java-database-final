@@ -1,7 +1,121 @@
 package com.project.code.Model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "order_details")
 public class OrderDetails {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    @JsonManagedReference("order-customer")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id", nullable = false)
+    @JsonManagedReference
+    private Store store;
+
+    @NotNull
+    private Double totalPrice;
+
+    @NotNull
+    private LocalDateTime date;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    //Constructors
+    
+    // Required by JPA/Hibernate
+    public OrderDetails() {
+    }
+
+    // Used when creating a new order
+    public OrderDetails(
+            Customer customer,
+            Store store,
+            Double totalPrice,
+            LocalDateTime date
+    ) {
+        this.customer = customer;
+        this.store = store;
+        this.totalPrice = totalPrice;
+        this.date = date;
+    }
+
+    //Getters and setters
+    public long getId() {
+        return id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+
 
 // 1. Add 'id' field:
 //    - Type: private Long 

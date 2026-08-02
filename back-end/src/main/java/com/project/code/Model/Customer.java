@@ -21,7 +21,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotNull(message = "Name cannot be null")
     private String name;
@@ -33,9 +33,21 @@ public class Customer {
     private String phone;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER) //Loads all orders of a customer when using DB
-    @JsonManagedReference
+    @JsonManagedReference("order-customer")
     private List<OrderDetails> orders = new ArrayList<>();
     
+    //Constructors
+
+    // Required by JPA/Hibernate
+    public Customer() {
+    }
+
+    // Useful when creating a new customer
+    public Customer(String name, String email, String phone) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
 
     // Getters and setters
     public Long getId(){
