@@ -1,7 +1,75 @@
 package com.project.code.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "stores")
 public class Store {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @NotNull
+    private String name;
+
+    @NotNull
+    @NotBlank
+    private String address;
+
+    @OneToMany(mappedBy = "store", fetch = FetchType.EAGER)
+    @JsonManagedReference("inventory-store")
+    private List<Inventory> inventories = new ArrayList<>();
+
+
+    //Getters and setters
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public List<Inventory> getInventories() {
+        return inventories;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setInventories(List<Inventory> inventories) {
+        this.inventories = inventories;
+    }
+
+
 
 // 1. Add 'id' field:
 //    - Type: private long 

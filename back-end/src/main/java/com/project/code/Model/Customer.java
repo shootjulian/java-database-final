@@ -34,7 +34,7 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER) //Loads all orders of a customer when using DB
     @JsonManagedReference
-    List<OrderDetails> orders = new ArrayList<>();
+    private List<OrderDetails> orders = new ArrayList<>();
     
 
     // Getters and setters

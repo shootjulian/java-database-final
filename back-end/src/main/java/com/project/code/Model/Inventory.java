@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "inventory")
+@Table(name = "inventories")
 public class Inventory {
 
    @Id
@@ -28,10 +28,49 @@ public class Inventory {
 
    @ManyToOne
    @JoinColumn(name = "product_id", nullable = false)
+   @JsonManagedReference("inventory-product")
    private Product product;
 
-   
+   @ManyToOne
+   @JoinColumn(name = "store_id", nullable = false)
+   @JsonManagedReference("inventory-store")
+   private Store store; //Heres where I need to look at after using mappedBy = "store" 
 
+   @NotNull
+   private Integer stockLevel;
+
+   //Getters and setters
+   public long getId() {
+      return id;
+   }
+
+   public Product getProduct() {
+      return product;
+   }
+
+   public Store getStore() {
+      return store;
+   }
+
+   public Integer getStockLevel() {
+      return stockLevel;
+   }
+
+   public void setId(long id) {
+      this.id = id;
+   }
+
+   public void setProduct(Product product) {
+      this.product = product;
+   }
+
+   public void setStore(Store store) {
+      this.store = store;
+   }
+
+   public void setStockLevel(Integer stockLevel) {
+      this.stockLevel = stockLevel;
+   }
 
 
 
