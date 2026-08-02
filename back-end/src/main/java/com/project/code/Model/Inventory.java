@@ -1,7 +1,43 @@
 package com.project.code.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.annotations.ManyToAny;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "inventory")
 public class Inventory {
+
+   @Id
+   @GeneratedValue(strategy =  GenerationType.IDENTITY)
+   private long id;
+
+   @ManyToOne
+   @JoinColumn(name = "product_id", nullable = false)
+   private Product product;
+
+   
+
+
+
+
+
+
+
    // 1. Add 'id' field:
 //    - Type: private long 
 //    - This field will represent the unique identifier for the inventory entry.
