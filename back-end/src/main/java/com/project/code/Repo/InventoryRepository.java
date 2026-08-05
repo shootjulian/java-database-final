@@ -1,6 +1,7 @@
 package com.project.code.Repo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Repository;
 
 import com.project.code.Model.*;
 
@@ -8,14 +9,16 @@ import jakarta.transaction.Transactional;
 
 import java.util.*;
 
-
+@Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long>{
-    public Inventory findByProductIdandStoreId(Long productId, Long storeId);
+
+    public Inventory findByProductIdAndStoreId(Long productId, Long storeId);
+
     public List<Inventory> findByStore_Id(Long storeId);
 
     @Modifying
     @Transactional
-    public void deleteByProductId(String productId);
+    public void deleteByProductId(Long productId);
 
 
 // 1. Add the repository interface:
