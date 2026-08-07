@@ -23,7 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
         FROM Inventory i
         WHERE i.store.id = :storeId
             AND LOWER(i.product.name)
-                LIKE LOWER(CONCAT('%', :pname:, '%'))
+                LIKE LOWER(CONCAT('%', :pname, '%'))
         """)
     public List<Product> findByNameLike(
         @Param("storeId") Long storeId,
